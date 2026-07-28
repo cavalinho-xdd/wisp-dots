@@ -1,57 +1,68 @@
-# Wisp Dotfiles (wisp-dots)
+<div align="center">
+  <h1>Wisp Dotfiles</h1>
+  <p>A cohesive, dynamically themed dotfiles collection for the Wisp Shell ecosystem.</p>
+  <a href="#installation">Installation</a> •
+  <a href="#dynamic-theming">Theming</a> •
+  <a href="#repository-structure">Structure</a>
+</div>
 
-A cohesive, dynamically themed dotfiles collection for the Wisp Shell ecosystem.
+<br>
 
 This repository provides the underlying system configurations that power the Wisp desktop experience. It integrates seamlessly with Hyprland and utilizes a centralized color-generation pipeline to ensure that all your applications share a unified, professional aesthetic.
 
-## Architecture & Theming
+## Table of Contents
+- [Supported Environments](#supported-environments)
+- [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [Automated Setup](#automated-setup)
+- [Dynamic Theming](#dynamic-theming)
+- [Repository Structure](#repository-structure)
+- [License](#license)
 
-Wisp uses a declarative approach to configuration and theming:
-- **Hyprland Configurations**: A modular, Lua-based configuration setup for Hyprland that handles animations, window rules, and keybindings natively.
-- **Dynamic Theming (Matugen)**: The core of the Wisp visual experience. Instead of hardcoded colors, Wisp uses Matugen to extract color palettes from your wallpaper and dynamically generate configurations for your entire system.
-
-Currently supported dynamic applications include:
-- Kitty & Foot Terminals
-- Starship Shell Prompt
-- Btop Resource Monitor
-- Fastfetch
-- Micro Text Editor (via terminal inheritance)
-- Spotify (via Spicetify)
-- Discord (via Vesktop/Vencord)
+## Supported Environments
+Wisp Dotfiles natively configures and themes the following tools:
+- **Desktop Environment**: Hyprland
+- **Terminals**: Kitty, Foot
+- **Shell & Prompts**: Fish, Starship
+- **System Monitors**: Btop, Fastfetch
+- **Text Editors**: Micro (via terminal inheritance)
+- **Third-Party Apps**: Spotify (via Spicetify), Discord (via Vesktop/Vencord)
 
 ## Installation
 
-The repository includes a robust installation script designed to be safe and intuitive for both beginners and advanced users.
+### Prerequisites
+Before installing, ensure your system is running a modern Arch-based distribution. The installation script relies on an AUR helper (`paru` or `yay`) to fetch required dependencies.
 
-The installer will automatically:
+### Automated Setup
+The repository includes a robust installation script designed to be safe and comprehensive. The installer will automatically:
 1. Detect and install required system dependencies using your AUR helper.
-2. Backup any of your existing configurations before making changes.
-3. Synchronize the Wisp configurations to your system.
+2. Backup any of your existing configurations to `~/.config.bak/`.
+3. Synchronize the Wisp configurations to your `~/.config` directory.
 4. Clone and install the `wisp-shell` core components if they are not already present.
 5. Generate your initial system colors and reload the desktop environment.
 
 To install the entire Wisp ecosystem, run:
-
 ```bash
-git clone https://github.com/cavalinho-xdd/wisp-dots.git
-cd wisp-dots
+git clone https://github.com/cavalinho-xdd/wisp-dots.git ~/.config/wisp-dots
+cd ~/.config/wisp-dots
 chmod +x install.sh
 ./install.sh
 ```
 
-## Post-Installation Usage
+## Dynamic Theming
+Wisp abandons hardcoded colors. Instead, it uses **Matugen** to extract a color palette directly from your wallpaper and dynamically generate configurations for your entire system.
 
-After installation, your entire system's theme is bound to your wallpaper. To change the look of your desktop and all supported applications simultaneously, use the Matugen CLI:
-
+To change the look of your desktop and all supported applications simultaneously, execute:
 ```bash
 matugen image /path/to/your/wallpaper.jpg
 ```
-
 This single command will regenerate all templates and instantly apply the new color scheme across your operating system.
 
 ## Repository Structure
-
 For advanced users looking to customize the environment:
-- `/hypr/`: Modular Hyprland configuration scripts.
-- `/matugen/`: Contains the `config.toml` pipeline and the raw template files used to generate application themes.
-- `/fish/` & `/kitty/`: Base shell and terminal configurations designed to inherit dynamic colors natively.
+- `hypr/`: Modular Hyprland configuration scripts natively written in Lua.
+- `matugen/`: Contains the `config.toml` pipeline and the raw template files used to generate application themes.
+- `fish/` & `kitty/`: Base shell and terminal configurations designed to inherit dynamic colors natively.
+
+## License
+This project is licensed under the MIT License.
