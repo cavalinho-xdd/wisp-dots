@@ -48,6 +48,8 @@ PACKAGES=(
     "hyprland" "xdg-desktop-portal-hyprland" "fish" "eza" "zoxide"
     "kitty" "fastfetch" "btop" "micro" "matugen-bin" "wl-clipboard"
     "ttf-jetbrains-mono-nerd" "jq" "ripgrep"
+    "papirus-icon-theme" "bibata-cursor-theme" "nwg-look"
+    "adw-gtk3" "qt5ct" "qt6ct" "kvantum"
 )
 
 if [ -n "$AUR_HELPER" ]; then
@@ -124,6 +126,15 @@ killall -USR2 btop 2>/dev/null || true
 # Set fish as default shell if not already
 if [[ "$SHELL" != *fish ]]; then
     msg_warn "Consider setting fish as your default shell: chsh -s \$(which fish)"
+fi
+
+msg "Applying GTK and Icon Themes via gsettings..."
+if command -v gsettings >/dev/null 2>&1; then
+    gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark' || true
+    gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark' || true
+    gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Classic' || true
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' || true
+    msg_ok "GTK preferences configured."
 fi
 
 echo ""

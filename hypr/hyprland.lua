@@ -2,6 +2,7 @@
 -- This file is meant to be a clean, slop-free foundation.
 -- Structured for wisp-shell compatibility.
 
+require("env")
 require("monitors")
 require("general")
 require("animations")
