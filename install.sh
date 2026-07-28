@@ -56,6 +56,18 @@ if [ -n "$AUR_HELPER" ]; then
     msg_ok "Packages installed."
 fi
 
+# 2.5 Wisp Shell Core Dependency
+if ! command -v wisp >/dev/null 2>&1; then
+    msg_warn "Wisp Shell not found. Cloning and installing from GitHub..."
+    if [ -d "/tmp/wisp-shell" ]; then rm -rf "/tmp/wisp-shell"; fi
+    git clone https://github.com/cavalinho-xdd/wisp-shell.git /tmp/wisp-shell >/dev/null 2>&1
+    bash /tmp/wisp-shell/setup install
+    rm -rf "/tmp/wisp-shell"
+    msg_ok "Wisp Shell installed."
+else
+    msg_ok "Wisp Shell is already installed."
+fi
+
 # 3. Backup and Sync configurations
 msg "Syncing configurations to $CONFIG_DIR..."
 mkdir -p "$CONFIG_DIR"
