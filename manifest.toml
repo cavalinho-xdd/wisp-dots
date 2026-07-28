@@ -1,0 +1,113 @@
+packages = ["wisp-shell", "matugen-bin"]
+post_install = [
+    "wisp-shell -d >/dev/null",
+]
+post_update = ["wisp-shell -k; sleep 1; wisp-shell -d >/dev/null"]
+
+# --- Core components ---
+
+[[components]]
+name = "hypr"
+default = true
+packages = [
+    "hyprland",
+    "xdg-desktop-portal-hyprland",
+    "xdg-desktop-portal-gtk",
+    "ttf-jetbrains-mono-nerd",
+]
+post_install = ["hyprctl reload >/dev/null"]
+post_update = ["hyprctl reload >/dev/null"]
+[[components.entries]]
+src = "hypr"
+dest = "$XDG_CONFIG_HOME/hypr"
+
+[[components]]
+name = "matugen"
+default = true
+packages = ["matugen-bin"]
+[[components.entries]]
+src = "matugen"
+dest = "$XDG_CONFIG_HOME/matugen"
+
+[[components]]
+name = "fish"
+default = true
+packages = ["fish", "eza", "zoxide", "direnv"]
+post_install = [
+    "mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/wisp-dots",
+    "touch ${XDG_CONFIG_HOME:-$HOME/.config}/wisp-dots/user-config.fish",
+]
+[[components.entries]]
+src = "fish"
+dest = "$XDG_CONFIG_HOME/fish"
+
+[[components]]
+name = "kitty"
+default = true
+packages = ["kitty", "ttf-jetbrains-mono-nerd"]
+[[components.entries]]
+src = "kitty"
+dest = "$XDG_CONFIG_HOME/kitty"
+
+[[components]]
+name = "fastfetch"
+default = true
+packages = ["fastfetch"]
+[[components.entries]]
+src = "fastfetch"
+dest = "$XDG_CONFIG_HOME/fastfetch"
+
+[[components]]
+name = "btop"
+default = true
+packages = ["btop"]
+post_install = ["killall -USR2 btop 2>/dev/null || true"]
+post_update = ["killall -USR2 btop 2>/dev/null || true"]
+[[components.entries]]
+src = "btop"
+dest = "$XDG_CONFIG_HOME/btop"
+
+[[components]]
+name = "micro"
+default = true
+packages = ["micro"]
+[[components.entries]]
+src = "micro"
+dest = "$XDG_CONFIG_HOME/micro"
+
+[[components]]
+name = "clipboard"
+default = true
+packages = ["wl-clipboard", "cliphist"]
+
+[[components]]
+name = "tools"
+default = true
+packages = [
+    "curl",
+    "git",
+    "jq",
+    "lazygit",
+    "bat",
+    "ripgrep",
+    "ydotool",
+    "xdg-user-dirs",
+]
+post_install = ["xdg-user-dirs-update"]
+
+# --- Optional components ---
+
+[[components]]
+name = "spotify"
+packages = ["spotify", "spicetify-cli", "spicetify-marketplace-bin"]
+post_install = [
+    "spicetify config current_theme Matugen color_scheme Matugen custom_apps marketplace",
+    "spicetify apply",
+]
+[[components.entries]]
+src = "spicetify"
+dest = "$XDG_CONFIG_HOME/spicetify"
+
+[[components]]
+name = "discord"
+packages = ["vesktop-bin"]

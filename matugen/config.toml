@@ -20,3 +20,11 @@ output_path = '~/.config/spicetify/Themes/Matugen/color.ini'
 [templates.fastfetch]
 input_path = 'templates/fastfetch-colors.jsonc'
 output_path = '~/.config/fastfetch/colors.jsonc'
+
+[templates.btop]
+input_path = 'templates/btop-theme.theme'
+output_path = '~/.config/btop/themes/wisp.theme'
+
+[templates.starship]
+input_path = 'templates/starship.toml'
+output_path = '~/.config/starship.toml'

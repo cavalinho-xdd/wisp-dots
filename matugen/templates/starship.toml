@@ -1,0 +1,99 @@
+# version: 1.0.0
+# Wisp Starship Configuration
+
+add_newline = false
+continuation_prompt = "[▸▹ ](#{{colors.on_surface_variant.default.hex_stripped}})"
+
+format = """($nix_shell$container$fill$git_metrics\n)$cmd_duration\
+$hostname\
+$localip\
+$shlvl\
+$shell\
+$env_var\
+$jobs\
+$sudo\
+$username\
+$character"""
+
+right_format = """
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$package\
+$memory_usage\
+$status\
+$os\
+$battery\
+$time"""
+
+[fill]
+symbol = ' '
+
+[character]
+format = "$symbol "
+success_symbol = "[◎](bold #{{colors.primary.default.hex_stripped}})"
+error_symbol = "[○](bold #{{colors.error.default.hex_stripped}})"
+vimcmd_symbol = "[■](bold #{{colors.tertiary.default.hex_stripped}})"
+vimcmd_replace_one_symbol = "◌"
+vimcmd_replace_symbol = "□"
+vimcmd_visual_symbol = "▼"
+
+[sudo]
+format = "[$symbol]($style)"
+style = "bold italic #{{colors.primary.default.hex_stripped}}"
+symbol = "⋈┈"
+disabled = false
+
+[username]
+style_user = "bold italic #{{colors.secondary.default.hex_stripped}}"
+style_root = "bold italic #{{colors.error.default.hex_stripped}}"
+format = "[⭘ $user]($style) "
+disabled = false
+show_always = false
+
+[directory]
+home_symbol = "⌂"
+truncation_length = 2
+truncation_symbol = "□ "
+read_only = " ◈"
+use_os_path_sep = true
+style = "italic #{{colors.on_background.default.hex_stripped}}"
+format = '[$path]($style)[$read_only]($read_only_style)'
+repo_root_style = 'bold #{{colors.secondary.default.hex_stripped}}'
+repo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) [△](bold #{{colors.secondary.default.hex_stripped}})'
+
+[cmd_duration]
+min_time = 0
+format = "[◄ $duration ](italic #{{colors.on_surface_variant.default.hex_stripped}})"
+
+[jobs]
+format = "[$symbol$number]($style) "
+style = "#{{colors.on_surface_variant.default.hex_stripped}}"
+symbol = "[▶](#{{colors.secondary.default.hex_stripped}} italic)"
+
+[time]
+disabled = false
+format = "[ $time]($style)"
+time_format = "%R"
+utc_time_offset = "local"
+style = "italic dimmed #{{colors.on_surface_variant.default.hex_stripped}}"
+
+[git_branch]
+format = " [$branch(:$remote_branch)]($style)"
+symbol = "[△](#{{colors.secondary.default.hex_stripped}})"
+style = "italic #{{colors.secondary.default.hex_stripped}}"
+truncation_symbol = "⋯"
+truncation_length = 11
+
+[git_status]
+style = "bold italic #{{colors.secondary.default.hex_stripped}}"
+format = "([⎪$ahead_behind$staged$modified$untracked$renamed$deleted$conflicted$stashed⎥]($style))"
+conflicted = "[◪◦](italic #{{colors.primary.default.hex_stripped}})"
+ahead = "[▴│[${count}](bold #{{colors.on_background.default.hex_stripped}})│](italic #{{colors.tertiary.default.hex_stripped}})"
+behind = "[▿│[${count}](bold #{{colors.on_background.default.hex_stripped}})│](italic #{{colors.error.default.hex_stripped}})"
+untracked = "[◌◦](italic #{{colors.on_primary_container.default.hex_stripped}})"
+modified = "[●◦](italic #{{colors.secondary_container.default.hex_stripped}})"
+staged = "[▪┤[$count](bold #{{colors.on_background.default.hex_stripped}})│](italic #{{colors.secondary.default.hex_stripped}})"
+deleted = "[✕](italic #{{colors.error.default.hex_stripped}})"
