@@ -1,0 +1,22 @@
+[config]
+version_check = false
+
+[templates.hyprland]
+input_path = 'templates/hyprland-colors.conf'
+output_path = '~/.config/hypr/colors.conf'
+
+[templates.kitty]
+input_path = 'templates/kitty-colors.conf'
+output_path = '~/.config/kitty/colors.conf'
+
+[templates.discord]
+input_path = 'templates/discord.css'
+output_path = '~/.config/vesktop/themes/matugen.css'
+
+[templates.spotify]
+input_path = 'templates/spotify.ini'
+output_path = '~/.config/spicetify/Themes/Matugen/color.ini'
+
+[templates.fastfetch]
+input_path = 'templates/fastfetch-colors.jsonc'
+output_path = '~/.config/fastfetch/colors.jsonc'
