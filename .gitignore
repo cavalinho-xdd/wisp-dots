@@ -1,0 +1,10 @@
+# AI/Editor artifacts
+.tokensave/
+.impeccable/
+.gemini/
+CLAUDE.md
+*.original.md
+.vscode/
+
+# System artifacts
+.DS_Store
