@@ -1,8 +1,10 @@
-packages = ["wisp-shell", "matugen-bin"]
+# wisp-shell itself is not a pacman/AUR package -- install.sh bootstraps it
+# separately (git clone + its own ./setup install) since it isn't published.
+packages = []
 post_install = [
-    "wisp-shell -d >/dev/null",
+    "wisp start >/dev/null",
 ]
-post_update = ["wisp-shell -k; sleep 1; wisp-shell -d >/dev/null"]
+post_update = ["wisp stop; sleep 1; wisp start >/dev/null"]
 
 # --- Core components ---
 
@@ -15,7 +17,11 @@ packages = [
     "xdg-desktop-portal-gtk",
     "ttf-jetbrains-mono-nerd",
 ]
-post_install = ["hyprctl reload >/dev/null"]
+post_install = [
+    "touch ${XDG_CONFIG_HOME:-$HOME/.config}/hypr/local.lua",
+    "test -f ${XDG_CONFIG_HOME:-$HOME/.config}/hypr/keybinds_custom.lua || printf '%s\\n%s\\n' '-- Wisp custom keybinds -- managed entirely by Settings > Keybinds > Add keybind.' '-- Hand edits here will be overwritten the next time a keybind is added, edited, or removed.' > ${XDG_CONFIG_HOME:-$HOME/.config}/hypr/keybinds_custom.lua",
+    "hyprctl reload >/dev/null",
+]
 post_update = ["hyprctl reload >/dev/null"]
 [[components.entries]]
 src = "hypr"
@@ -30,9 +36,24 @@ src = "matugen"
 dest = "$XDG_CONFIG_HOME/matugen"
 
 [[components]]
+name = "qt-theme"
+default = true
+# Themes Qt/KDE apps (Dolphin, etc). Primary: qtengine, reads the
+# kde_colorscheme matugen template (a real KDE .colors scheme -- what
+# KColorScheme widgets like Dolphin's file view actually read, unlike a
+# plain QPalette). Fallback: qt5ct/qt6ct via the matugen templates in the
+# matugen component above; their .conf files aren't shipped as static
+# dotfiles since they need a real absolute $HOME baked in -- install.sh's
+# "Qt platform theme" step generates them.
+packages = ["qtengine", "breeze", "qt5ct", "qt6ct", "kvantum"]
+[[components.entries]]
+src = "qtengine"
+dest = "$XDG_CONFIG_HOME/qtengine"
+
+[[components]]
 name = "fish"
 default = true
-packages = ["fish", "eza", "zoxide", "direnv"]
+packages = ["fish", "eza", "zoxide", "direnv", "starship"]
 post_install = [
     "mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/wisp-dots",
     "touch ${XDG_CONFIG_HOME:-$HOME/.config}/wisp-dots/user-config.fish",
@@ -111,3 +132,11 @@ dest = "$XDG_CONFIG_HOME/spicetify"
 [[components]]
 name = "discord"
 packages = ["vesktop-bin"]
+
+[[components]]
+name = "firefox"
+# No [[components.entries]] here -- Firefox profile dirs are randomly named
+# (<8 random chars>.default-release), so a static src/dest pair doesn't
+# work. install.sh's dedicated Firefox step parses profiles.ini to find the
+# real profile dir and deploys userChrome.css/user.js there instead.
+packages = ["firefox"]

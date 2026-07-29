@@ -1,3 +1,15 @@
+# Autostart Hyprland on a bare TTY1 login -- for anyone logging in on a raw
+# TTY with no display manager (SDDM/GDM/etc). Inert if you use one: a DM
+# doesn't put you on tty1 via a normal login shell the way this checks for.
+# wisp-shell itself autostarts from hyprland.lua's own
+# hl.on("hyprland.start", ...) hook once Hyprland is actually up.
+if status is-login
+    and test (tty) = /dev/tty1
+    and not set -q WAYLAND_DISPLAY
+    and not set -q DISPLAY
+    exec Hyprland
+end
+
 if status is-interactive
     # Starship custom prompt
     command -v starship &> /dev/null && starship init fish | source
@@ -9,8 +21,9 @@ if status is-interactive
     # Better ls
     command -v eza &> /dev/null && alias ls='eza --icons --group-directories-first -1'
 
-    # Wisp fastfetch on launch
-    command -v fastfetch &> /dev/null && fastfetch --config ~/.config/fastfetch/config.jsonc
+    # fastfetch + the wisp banner now run from functions/fish_greeting.fish,
+    # which fish calls automatically instead of its own default greeting
+    # ("Welcome to fish...") -- calling fastfetch here too would double-print.
 
     # Abbrs
     abbr lg 'lazygit'

@@ -19,7 +19,7 @@ output_path = '~/.config/spicetify/Themes/Matugen/color.ini'
 
 [templates.fastfetch]
 input_path = 'templates/fastfetch-colors.jsonc'
-output_path = '~/.config/fastfetch/colors.jsonc'
+output_path = '~/.config/fastfetch/config.jsonc'
 
 [templates.btop]
 input_path = 'templates/btop-theme.theme'
@@ -28,3 +28,45 @@ output_path = '~/.config/btop/themes/wisp.theme'
 [templates.starship]
 input_path = 'templates/starship.toml'
 output_path = '~/.config/starship.toml'
+
+# ── Qt/KDE apps (Dolphin, etc) ──
+#
+# Primary mechanism: qtengine (QT_QPA_PLATFORMTHEME=qtengine, set in
+# hypr/env.lua). It reads a real KDE ".colors" scheme file -- the actual
+# [Colors:View]/[Colors:Window]/[Colors:Selection]/... groups KColorScheme-
+# based widgets (Dolphin's file view, KIO dialogs, etc) read directly. This
+# is the piece the qt6ct+QSS attempt below was missing: qt6ct only sets the
+# generic QPalette, which plain QWidgets honor but KDE's own KColorScheme
+# widgets mostly ignore -- explains why only the sidebar (plain QTreeView)
+# themed and the file view (custom KDE widget) didn't. Format ported from
+# InioX/matugen-themes' Matugen.colors template (referenced from an
+# illogical-impulse discussion on switching to qtengine), every color role
+# it uses confirmed present in matugen's own --json output before adopting
+# it here.
+[templates.kde_colorscheme]
+input_path = 'templates/kde-colorscheme.colors'
+output_path = '~/.local/share/color-schemes/matugen.colors'
+
+# Fallback mechanism, kept working in case qtengine isn't installed:
+# qt6ct.conf/qt5ct.conf (not matugen-managed, see install.sh's qt-theme
+# step) point custom_palette + stylesheets at these two generated files.
+# Same source template for qt5 and qt6: the [ColorScheme] format qt5ct/qt6ct
+# actually read (verified against /usr/share/qt6ct/colors/*.conf and the
+# qt6ct binary's own QSettings key strings) hasn't changed between them.
+# This only covers plain QWidgets, per the note above -- it's why the
+# earlier attempt with just this looked half-themed.
+[templates.qt6ct]
+input_path = 'templates/qtct-colors.conf'
+output_path = '~/.config/qt6ct/colors/matugen.conf'
+
+[templates.qt5ct]
+input_path = 'templates/qtct-colors.conf'
+output_path = '~/.config/qt5ct/colors/matugen.conf'
+
+[templates.qt6_style]
+input_path = 'templates/qt-style.qss'
+output_path = '~/.config/qt6ct/qss/matugen-style.qss'
+
+[templates.qt5_style]
+input_path = 'templates/qt-style.qss'
+output_path = '~/.config/qt5ct/qss/matugen-style.qss'

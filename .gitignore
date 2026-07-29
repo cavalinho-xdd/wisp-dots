@@ -8,3 +8,14 @@ CLAUDE.md
 
 # System artifacts
 .DS_Store
+
+# Per-machine Hyprland overrides (GPU vars, monitor layout, personal
+# autostart) -- see hypr/hyprland.lua's pcall(require, "local"). Lives
+# inside this dir because hypr/ is symlinked whole into ~/.config/hypr.
+hypr/local.lua
+
+# wisp-shell Settings > Keybinds > Add keybind writes rebinds straight into
+# this file at runtime -- it's per-machine generated state, not shipped
+# config. manifest.toml's hypr post_install hook recreates it with just the
+# header comment on a fresh install; hypr/hyprland.lua pcall-requires it.
+hypr/keybinds_custom.lua
