@@ -11,6 +11,9 @@ if status is-login
 end
 
 if status is-interactive
+    # Ensure local bin is on PATH for wisp cli
+    fish_add_path $HOME/.local/bin
+
     # Starship custom prompt
     command -v starship &> /dev/null && starship init fish | source
 

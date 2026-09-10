@@ -126,7 +126,6 @@ This repo is designed to be used with [wisp-shell](https://github.com/cavalinho-
 - `install.sh` — the installer described above.
 
 ## Known Limitations
-- `matugen/templates/hyprland-colors.conf` generates classic hyprlang `$variable` syntax, which the Lua-based Hyprland config doesn't read — Hyprland's own border colors are currently static, not wallpaper-driven. Everything else in the Dynamic Theming list above works.
 - No `install.sh uninstall`/`update` subcommand yet. Each run writes what it did to `~/.config/wisp-dots/state.json`, which is groundwork for one, but nothing currently reads that file back.
 
 ## License

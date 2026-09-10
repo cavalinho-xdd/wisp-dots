@@ -3,6 +3,7 @@
 
 -- Core
 hl.bind("SUPER + Return", hl.dsp.exec_cmd("kitty"), { description = "Launch terminal" })
+hl.bind("SUPER + SHIFT + B", hl.dsp.exec_cmd(os.getenv("HOME") .. "/.config/wisp-dots/scripts/scratchpad.sh"), { description = "Toggle scratchpad terminal" })
 hl.bind("SUPER + Q", hl.dsp.window.close(), { description = "Close active window" })
 hl.bind("SUPER + M", hl.dsp.exit(), { description = "Exit Hyprland" })
 hl.bind("SUPER + E", hl.dsp.exec_cmd("dolphin"), { description = "Launch file manager" })
@@ -17,6 +18,7 @@ hl.bind("SUPER + J", hl.dsp.layout("togglesplit"), { description = "Dwindle: Tog
 -- injection (first-bound-wins), so fixing this one is what actually matters.
 hl.bind("SUPER + Space", hl.dsp.exec_cmd("$HOME/.local/bin/wisp launcher"), { description = "Wisp: App Launcher" })
 hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd("$HOME/.local/bin/wisp screenshot"), { description = "Wisp: Screenshot area" })
+hl.bind("SUPER + SHIFT + W", hl.dsp.exec_cmd("$HOME/.local/bin/wisp wallpaper"), { description = "Wisp: Wallpaper Picker" })
 
 -- Move focus
 hl.bind("SUPER + left", hl.dsp.focus({ direction = "l" }), { description = "Focus left" })

@@ -34,4 +34,6 @@ hl.on("hyprland.start", function()
     -- it caches the last-set image and needs an explicit restore call once
     -- the daemon is up.
     hl.exec_cmd("sleep 1 && awww restore")
+    -- Contextual Scratchpad
+    hl.exec_cmd("[workspace special:scratchpad silent] kitty --class wisp-scratchpad micro ~/scratchpad.txt")
 end)
