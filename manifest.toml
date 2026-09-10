@@ -44,6 +44,16 @@ default = true
 packages = ["dolphin"]
 
 [[components]]
+name = "gtk-theme"
+default = true
+# install.sh's gsettings step sets gtk-theme=adw-gtk3-dark,
+# icon-theme=Papirus-Dark, cursor-theme=Bibata-Modern-Classic; env.lua sets
+# XCURSOR_THEME=Bibata-Modern-Classic and hyprland.lua runs
+# `hyprctl setcursor Bibata-Modern-Classic` on start -- none of these named
+# themes were ever installed as packages.
+packages = ["adw-gtk-theme", "papirus-icon-theme", "bibata-cursor-theme-bin"]
+
+[[components]]
 name = "matugen"
 default = true
 packages = ["matugen-bin"]
