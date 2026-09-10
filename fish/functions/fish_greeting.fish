@@ -1,5 +1,10 @@
 function fish_greeting
-    set_color cba6f7
+    if test -f ~/.config/fish/matugen_colors.fish
+        source ~/.config/fish/matugen_colors.fish
+        set_color $matugen_primary
+    else
+        set_color cba6f7
+    end
     echo " _       __ _                 ____         __        "
     echo "| |     / /(_)_____ ____     / __ \ ____  / /_ _____ "
     echo "| | /| / // // ___// __ \   / / / // __ \/ __// ___/ "

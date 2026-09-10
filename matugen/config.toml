@@ -70,3 +70,11 @@ output_path = '~/.config/qt6ct/qss/matugen-style.qss'
 [templates.qt5_style]
 input_path = 'templates/qt-style.qss'
 output_path = '~/.config/qt5ct/qss/matugen-style.qss'
+
+[templates.hyprland_lua]
+input_path = 'templates/hyprland-colors.lua'
+output_path = '~/.config/hypr/colors.lua'
+
+[templates.fish_colors]
+input_path = 'templates/fish-colors.fish'
+output_path = '~/.config/fish/matugen_colors.fish'

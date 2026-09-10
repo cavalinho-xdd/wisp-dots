@@ -1,6 +1,16 @@
 -- General Settings & Decoration
 -- Ref: Wisp DESIGN.md (flat UI, tonal layers, smooth borders)
 
+local chunk = loadfile(os.getenv("HOME") .. "/.config/hypr/colors.lua")
+local mcolors = chunk and chunk()
+local border_colors = mcolors or {
+    active_border = {
+        colors = { "rgba(cba6f7ff)", "rgba(89b4faff)" },
+        angle = 45
+    },
+    inactive_border = "rgba(45475aaa)"
+}
+
 hl.config({
     input = {
         kb_layout = "cz",
@@ -11,16 +21,10 @@ hl.config({
         sensitivity = 0
     },
     general = {
-        gaps_in = 6,
-        gaps_out = 10,
-        border_size = 0,
-        col = {
-            active_border = {
-                colors = { "rgba(cba6f7ff)", "rgba(89b4faff)" },
-                angle = 45
-            },
-            inactive_border = "rgba(45475aaa)"
-        },
+        gaps_in = 5,
+        gaps_out = 12,
+        border_size = 1,
+        col = border_colors,
         layout = "dwindle"
     },
     decoration = {

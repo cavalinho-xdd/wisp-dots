@@ -272,7 +272,7 @@ msg "Bootstrapping Matugen colors..."
 # template pointed at a not-yet-existing dir errors out rather than
 # mkdir -p'ing it) -- template output dirs that don't already exist from a
 # component deploy above need to be made ahead of time.
-mkdir -p "$HOME/.local/share/color-schemes"
+mkdir -p "$HOME/.local/share/color-schemes" "$HOME/.config/fish" "$HOME/.config/hypr"
 # wisp-shell ships no bundled default wallpaper (there is no assets/ dir in
 # that repo) -- find whatever is actually the current wallpaper instead:
 # wisp's own settings.json first (source of truth once wisp has run at least
