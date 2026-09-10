@@ -28,6 +28,22 @@ src = "hypr"
 dest = "$XDG_CONFIG_HOME/hypr"
 
 [[components]]
+name = "audio"
+default = true
+# hypr/keybinds.lua binds hardware volume/mic keys to wpctl (wireplumber),
+# and core/Audio.qml (wisp-shell) binds live to Quickshell.Services.Pipewire's
+# Pipewire.defaultAudioSink/Source -- both need a real running PipeWire +
+# WirePlumber session, not just Quickshell's libpipewire client link.
+packages = ["pipewire", "pipewire-pulse", "pipewire-audio", "pipewire-alsa", "wireplumber", "pwvucontrol"]
+
+[[components]]
+name = "filemanager"
+default = true
+# hypr/keybinds.lua binds SUPER+E to dolphin (also the README's documented
+# out-of-box file manager keybind). qt-theme themes it but never installed it.
+packages = ["dolphin"]
+
+[[components]]
 name = "matugen"
 default = true
 packages = ["matugen-bin"]
@@ -113,6 +129,7 @@ packages = [
     "ripgrep",
     "ydotool",
     "xdg-user-dirs",
+    "brightnessctl", # hypr/keybinds.lua hardware brightness keys
 ]
 post_install = ["xdg-user-dirs-update"]
 
