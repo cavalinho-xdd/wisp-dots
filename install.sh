@@ -436,9 +436,17 @@ STATEIN
 rm -f "$STATE_PY"
 msg_ok "State recorded at $STATE_FILE"
 
-# Set fish as default shell if not already
-if [[ "$SHELL" != *fish ]]; then
-    msg_warn "Consider setting fish as your default shell: chsh -s \$(which fish)"
+# Set fish as default shell -- before the first reboot, not just suggested,
+# so zero-touch install doesn't leave one manual step for later. usermod (not
+# chsh) since it's already running as root here and doesn't need the user's
+# own password on top of sudo.
+if [[ "$SHELL" != *fish ]] && command -v fish >/dev/null 2>&1; then
+    FISH_PATH="$(command -v fish)"
+    if sudo usermod -s "$FISH_PATH" "$(whoami)" 2>/dev/null; then
+        msg_ok "fish set as default shell (takes effect next login)."
+    else
+        msg_warn "Could not set fish as default shell automatically -- run manually: chsh -s $FISH_PATH"
+    fi
 fi
 
 msg "Applying GTK and Icon Themes via gsettings..."
