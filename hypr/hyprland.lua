@@ -15,6 +15,7 @@ require("keybinds")
 -- just its header comment; local.lua stays empty until you add to it.
 -- pcall both so a fresh install (before that hook has ever run, or before
 -- you've written a local.lua) doesn't error.
+pcall(require, "windowrules_custom")
 pcall(require, "keybinds_custom")
 pcall(require, "local")
 
