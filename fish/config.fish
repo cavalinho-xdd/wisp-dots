@@ -7,7 +7,7 @@ if status is-login
     and test (tty) = /dev/tty1
     and not set -q WAYLAND_DISPLAY
     and not set -q DISPLAY
-    exec Hyprland
+    exec start-hyprland
 end
 
 if status is-interactive

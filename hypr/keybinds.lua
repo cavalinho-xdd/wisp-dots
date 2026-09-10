@@ -99,3 +99,10 @@ hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO
 hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { description = "Toggle Mute" })
 hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl s 5%+"), { description = "Brightness Up" })
 hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl s 5%-"), { description = "Brightness Down" })
+
+-- Touchpad Gestures
+hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
+hl.gesture({ fingers = 4, direction = "up", action = "fullscreen" })
+hl.gesture({ fingers = 4, direction = "down", action = "close" })
+hl.gesture({ fingers = 3, direction = "up", action = "special", workspace_name = "" })
+hl.gesture({ fingers = 3, direction = "down", action = "special", workspace_name = "" })

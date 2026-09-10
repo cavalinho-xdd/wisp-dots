@@ -20,4 +20,4 @@ hl.animation({ leaf = "fadeOut", enabled = true, speed = 2, bezier = "linear" })
 
 hl.animation({ leaf = "border", enabled = true, speed = 3, bezier = "easeOutCubic" })
 
-hl.animation({ leaf = "workspaces", enabled = true, speed = 3.5, bezier = "easeOutCubic", style = "slide" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 1, bezier = "easeOutQuint", style = "slide" })
