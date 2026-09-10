@@ -175,6 +175,17 @@ fi
 
 run_hooks post_package
 
+# 2.6 Enable PipeWire/WirePlumber user services. Installing the packages
+# alone doesn't start anything -- Arch ships no systemd preset enabling them,
+# so a fresh user session needs an explicit `systemctl --user enable --now`
+# or Audio.qml's Pipewire.defaultAudioSink stays null forever.
+if command -v pipewire >/dev/null 2>&1 && command -v systemctl >/dev/null 2>&1; then
+    msg "Enabling PipeWire/WirePlumber user services..."
+    systemctl --user enable --now pipewire.socket pipewire-pulse.socket wireplumber.service >/dev/null 2>&1 \
+        && msg_ok "PipeWire/WirePlumber services enabled." \
+        || msg_warn "Could not enable PipeWire user services -- run manually: systemctl --user enable --now pipewire pipewire-pulse wireplumber"
+fi
+
 # 3. Deploy configurations
 # hypr is symlinked, not copied: wisp-shell's own settings app writes
 # directly into ~/.config/hypr/*.lua live (see wisp-shell CLAUDE.md), so a
