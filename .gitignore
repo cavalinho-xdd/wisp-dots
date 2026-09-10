@@ -19,3 +19,10 @@ hypr/local.lua
 # config. manifest.toml's hypr post_install hook recreates it with just the
 # header comment on a fresh install; hypr/hyprland.lua pcall-requires it.
 hypr/keybinds_custom.lua
+hypr/colors.conf
+hypr/monitors.conf
+hypr/workspaces.conf
+
+# Machine-local state and overrides
+state.json
+user-config.fish
