@@ -3,13 +3,11 @@
 
 local chunk = loadfile(os.getenv("HOME") .. "/.config/hypr/colors.lua")
 local mcolors = chunk and chunk()
-local border_colors = mcolors or {
-    active_border = {
-        colors = { "rgba(cba6f7ff)", "rgba(89b4faff)" },
-        angle = 45
-    },
-    inactive_border = "rgba(45475aaa)"
-}
+
+-- hyprland-lua currently has a bug parsing CGradientValueData strings.
+-- We must pass a single CColor string or it throws "invalid color".
+local active_str = mcolors and mcolors.active_border.colors[1] or "rgba(cba6f7ff)"
+local inactive_str = mcolors and mcolors.inactive_border or "rgba(45475aaa)"
 
 hl.config({
     input = {
@@ -22,14 +20,18 @@ hl.config({
     },
     general = {
         gaps_in = 5,
-        gaps_out = 12,
+        gaps_out = 11,
         border_size = 1,
-        col = border_colors,
+        ['col.active_border'] = active_str,
+        ['col.inactive_border'] = inactive_str,
         layout = "dwindle"
     },
     decoration = {
         rounding = 30, -- Follows Wisp scale (8, 12, 16, 24)
         
+        active_opacity = 1.0,
+        inactive_opacity = 0.8,
+
         blur = {
             enabled = true,
             size = 1,
