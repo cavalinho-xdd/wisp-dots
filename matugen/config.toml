@@ -78,3 +78,7 @@ output_path = '~/.config/hypr/colors.lua'
 [templates.fish_colors]
 input_path = 'templates/fish-colors.fish'
 output_path = '~/.config/fish/matugen_colors.fish'
+
+[templates.vencord]
+input_path = 'templates/discord.css'
+output_path = '~/.config/Vencord/themes/matugen.css'

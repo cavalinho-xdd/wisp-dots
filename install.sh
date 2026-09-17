@@ -266,6 +266,45 @@ if command -v spicetify >/dev/null 2>&1; then
     msg_ok "Spicetify configured."
 fi
 
+# 4.5 Discord / Vesktop Midnight Theme via Git
+if is_enabled discord; then
+    msg "Deploying Discord/Vesktop Midnight Theme via Git..."
+    mkdir -p "$HOME/.config/vesktop/themes" "$HOME/.config/Vencord/themes"
+    
+    TMP_DISCORD="$(mktemp -d)"
+    if git clone --depth 1 https://github.com/refact0r/midnight-discord.git "$TMP_DISCORD" >/dev/null 2>&1; then
+        cat "$TMP_DISCORD/themes/midnight.theme.css" > "$DOTS_DIR/matugen/templates/discord.css"
+        cat << 'EOF' >> "$DOTS_DIR/matugen/templates/discord.css"
+
+/* Matugen overrides */
+:root {
+  --text-1: #{{colors.on_surface.default.hex_stripped}};
+  --text-2: #{{colors.on_surface_variant.default.hex_stripped}};
+  --text-3: #{{colors.on_surface_variant.default.hex_stripped}};
+  --text-4: #{{colors.outline.default.hex_stripped}};
+  --text-5: #{{colors.outline_variant.default.hex_stripped}};
+  --bg-1: #{{colors.surface_container_highest.default.hex_stripped}};
+  --bg-2: #{{colors.surface_container_high.default.hex_stripped}};
+  --bg-3: #{{colors.surface_container.default.hex_stripped}};
+  --bg-4: #{{colors.surface.default.hex_stripped}};
+  --accent-1: #{{colors.primary.default.hex_stripped}};
+  --accent-2: #{{colors.primary.default.hex_stripped}};
+  --accent-3: #{{colors.primary_container.default.hex_stripped}};
+  --accent-4: #{{colors.primary_container.default.hex_stripped}};
+  --accent-5: #{{colors.primary_container.default.hex_stripped}};
+  --accent-new: #{{colors.tertiary.default.hex_stripped}};
+  --background-primary: var(--bg-4);
+  --background-secondary: var(--bg-3);
+  --background-secondary-alt: var(--bg-2);
+  --background-tertiary: var(--bg-1);
+}
+EOF
+        msg_ok "Midnight theme downloaded & Matugen template updated."
+    else
+        msg_warn "Failed to clone midnight-discord."
+    fi
+    rm -rf "$TMP_DISCORD"
+fi
 # 5. Bootstrapping dynamic themes via Matugen
 msg "Bootstrapping Matugen colors..."
 # matugen does not create nested output directories itself (verified: a

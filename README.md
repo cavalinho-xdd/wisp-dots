@@ -80,6 +80,9 @@ Re-running `install.sh` later is safe — it's idempotent (existing symlinks/pac
 | `hypr` | yes | Hyprland config, symlinked (see below) |
 | `matugen` | yes | wallpaper → color pipeline |
 | `qt-theme` | yes | qtengine + qt5ct/qt6ct fallback |
+| `gtk-theme` | yes | adw-gtk3, Papirus icons, Bibata cursors |
+| `audio` | yes | pipewire, wireplumber |
+| `filemanager` | yes | dolphin |
 | `fish` | yes | shell, prompt, greeting |
 | `kitty` | yes | terminal |
 | `fastfetch` | yes | |

@@ -17,6 +17,7 @@ hl.bind("SUPER + J", hl.dsp.layout("togglesplit"), { description = "Dwindle: Tog
 -- This static bind also wins over shell.qml's own runtime SUPER+Space
 -- injection (first-bound-wins), so fixing this one is what actually matters.
 hl.bind("SUPER + Space", hl.dsp.exec_cmd("$HOME/.local/bin/wisp launcher"), { description = "Wisp: App Launcher" })
+hl.bind("SUPER + I", hl.dsp.exec_cmd("$HOME/.local/bin/wisp settings"), { description = "Wisp: Settings App" })
 hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd("$HOME/.local/bin/wisp screenshot"), { description = "Wisp: Screenshot area" })
 hl.bind("SUPER + SHIFT + W", hl.dsp.exec_cmd("$HOME/.local/bin/wisp wallpaper"), { description = "Wisp: Wallpaper Picker" })
 
