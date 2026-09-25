@@ -8,6 +8,7 @@ hl.bind("SUPER + Q", hl.dsp.window.close(), { description = "Close active window
 hl.bind("SUPER + M", hl.dsp.exit(), { description = "Exit Hyprland" })
 hl.bind("SUPER + E", hl.dsp.exec_cmd("dolphin"), { description = "Launch file manager" })
 hl.bind("SUPER + V", hl.dsp.window.float({ action = "toggle" }), { description = "Toggle floating mode" })
+hl.bind("SUPER + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }), { description = "Toggle fullscreen" })
 hl.bind("SUPER + P", hl.dsp.layout("pseudo"), { description = "Dwindle: Pseudo tiling" })
 hl.bind("SUPER + J", hl.dsp.layout("togglesplit"), { description = "Dwindle: Toggle split" })
 
