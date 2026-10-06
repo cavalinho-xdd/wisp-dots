@@ -1,5 +1,12 @@
 -- Window Rules
 
+-- Ignore apps asking to start maximized. kitty remembers its last window
+-- state (~/.cache/kitty/main.json), so once one terminal was maximized every
+-- new one asked for it too. Hyprland treats maximize as a fullscreen mode, so
+-- the new window covered the others and Wisp hid its overlay. Same rule as
+-- Hyprland's own default config; SUPER+F still toggles fullscreen manually.
+hl.window_rule({ match = { class = ".*" }, suppress_event = "maximize" })
+
 -- Wisp settings app should float and center
 hl.window_rule({ match = { class = "^(org\\.quickshell)$" }, float = true })
 hl.window_rule({ match = { class = "^(org\\.quickshell)$" }, size = "860 600" })
