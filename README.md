@@ -120,6 +120,7 @@ This repo is designed to be used with [wisp-shell](https://github.com/cavalinho-
 
 - `hl.env(name, value[, dbus])` is the correct way to set environment variables — `hl.config({ env = {...} })` is a silent no-op, it does nothing and raises no error.
 - wisp-shell's Settings app writes live edits directly into `general.lua` (gaps/border/rounding/blur), `animations.lua` (the global animation toggle), and `keybinds_custom.lua` (rebinds) — it parses these files with fixed regexes, so if you hand-edit the surrounding syntax (e.g. renaming `gaps_in` or restructuring the `blur = {...}` table), Settings will silently stop being able to apply changes there. Stick to editing values, not shapes, if you want Settings to keep working.
+- Window glass follows the shell's island material (Settings > Shell > Material: Solid / Tinted glass / Smoked glass). wisp-shell runs `~/.config/wisp/hooks/material` (from `wisp/hooks/`), which writes `hypr/material.lua` (blur character, inactive opacity) and `kitty/material.conf` (background opacity), then reloads both. Blur size and passes stay with Settings > Hyprland.
 - `hypr/` is symlinked rather than copied specifically so these live Settings edits land in the repo (and are visible via `git diff`/`git status`) instead of being silently overwritten on the next `install.sh` run.
 
 ## Repository Structure

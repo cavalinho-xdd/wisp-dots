@@ -27,6 +27,10 @@ post_update = ["hyprctl reload >/dev/null"]
 [[components.entries]]
 src = "hypr"
 dest = "$XDG_CONFIG_HOME/hypr"
+# wisp-shell runs hooks/material when the island material changes
+[[components.entries]]
+src = "wisp/hooks"
+dest = "$XDG_CONFIG_HOME/wisp/hooks"
 
 [[components]]
 name = "audio"

@@ -17,6 +17,8 @@ require("keybinds")
 -- you've written a local.lua) doesn't error.
 pcall(require, "windowrules_custom")
 pcall(require, "keybinds_custom")
+-- material.lua is written by wisp/hooks/material to match the shell's island material.
+pcall(require, "material")
 pcall(require, "local")
 
 -- --- Core Execution ---
