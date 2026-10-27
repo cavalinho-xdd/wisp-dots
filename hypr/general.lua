@@ -22,8 +22,8 @@ hl.config({
         sensitivity = 0
     },
     general = {
-        gaps_in = 3,
-        gaps_out = 11,
+        gaps_in = 10,
+        gaps_out = 20,
         border_size = 0,
         ['col.active_border'] = active_str,
         ['col.inactive_border'] = inactive_str,
@@ -38,21 +38,26 @@ hl.config({
 
         blur = {
             enabled = true,
-            size = 1,
+            size = 5,
             passes = 3,
             new_optimizations = true
         },
 
+        -- Soft dark lift off the wallpaper on every window
         shadow = {
-            enabled = false
+            enabled = true,
+            range = 24,
+            render_power = 3,
+            color = "rgba(00000059)",
+            color_inactive = "rgba(00000040)"
         },
 
-        -- Ember glow on the active window only (shell: glowAlpha 0.22, glowBlur 22)
+        -- Faint ember glow on the active window only
         glow = {
             enabled = true,
-            range = 22,
+            range = 16,
             render_power = 3,
-            color = "rgba(" .. ember .. "38)",
+            color = "rgba(" .. ember .. "1f)",
             color_inactive = "rgba(00000000)"
         }
     }
