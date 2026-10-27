@@ -34,7 +34,7 @@ hl.config({
         rounding_power = 2, -- circular arcs, same as the shell's Qt corners
 
         active_opacity = 1.0,
-        inactive_opacity = 0.8,
+        inactive_opacity = 0.92, -- on top of kitty glass (0.90) this stays readable
 
         blur = {
             enabled = true,
