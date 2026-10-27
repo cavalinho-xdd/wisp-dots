@@ -19,7 +19,7 @@ case "$material" in
         blur="vibrancy = 0.1, brightness = 0.8, contrast = 0.9, noise = 0.01" ;;
     *)
         material="solid"
-        bg="#0a0b0e" opacity="1.0" inactive="1.0"
+        bg="#0a0b0e" opacity="1.0" inactive="0.92"
         blur="vibrancy = 0.1, brightness = 1.0, contrast = 1.0, noise = 0.01" ;;
 esac
 
