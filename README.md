@@ -113,7 +113,7 @@ wisp-shell runs Matugen for you whenever the wallpaper changes. To do it by hand
 ```bash
 matugen image /path/to/your/wallpaper.jpg
 ```
-This regenerates every template in `matugen/config.toml` (Hyprland, Kitty, Starship, Btop, Fastfetch, Qt, and if enabled Spicetify/Vesktop).
+This regenerates every template in `matugen/config.toml` (Hyprland, Kitty, Starship, Btop, Fastfetch, Qt, GTK, and if enabled Spicetify/Vesktop).
 
 ## Wisp Shell Integration
 This repo is designed to be used with [wisp-shell](https://github.com/cavalinho-xdd/wisp-shell)'s quickshell-based widgets, and its Hyprland config is written specifically against wisp-shell's Lua config layer (`hl.*`), **not** classic hyprlang `.conf`/`$variable` syntax. A few things to know if you're editing this config by hand:
