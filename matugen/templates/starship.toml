@@ -2,7 +2,17 @@
 # Wisp Starship Configuration
 
 add_newline = false
-continuation_prompt = "[▸▹ ](#{{colors.on_surface_variant.default.hex_stripped}})"
+palette = "wisp"
+
+# Wisp Ember: fixed neutrals and semantic colours, only the ember comes from the wallpaper
+[palettes.wisp]
+ember = "#{{colors.primary.default.hex_stripped}}"
+text = "#eef0f4"
+muted = "#8a8f9b"
+error = "#f38ba8"
+success = "#a6e3a1"
+warning = "#f9e2af"
+continuation_prompt = "[▸▹ ](muted)"
 
 format = """($nix_shell$container$fill$git_metrics\n)$cmd_duration\
 $hostname\
@@ -33,22 +43,22 @@ symbol = ' '
 
 [character]
 format = "$symbol "
-success_symbol = "[◎](bold #{{colors.primary.default.hex_stripped}})"
-error_symbol = "[○](bold #{{colors.error.default.hex_stripped}})"
-vimcmd_symbol = "[■](bold #{{colors.tertiary.default.hex_stripped}})"
+success_symbol = "[◎](bold ember)"
+error_symbol = "[○](bold error)"
+vimcmd_symbol = "[■](bold warning)"
 vimcmd_replace_one_symbol = "◌"
 vimcmd_replace_symbol = "□"
 vimcmd_visual_symbol = "▼"
 
 [sudo]
 format = "[$symbol]($style)"
-style = "bold italic #{{colors.primary.default.hex_stripped}}"
+style = "bold italic ember"
 symbol = "⋈┈"
 disabled = false
 
 [username]
-style_user = "bold italic #{{colors.secondary.default.hex_stripped}}"
-style_root = "bold italic #{{colors.error.default.hex_stripped}}"
+style_user = "bold italic muted"
+style_root = "bold italic error"
 format = "[⭘ $user]($style) "
 disabled = false
 show_always = false
@@ -59,41 +69,41 @@ truncation_length = 2
 truncation_symbol = "□ "
 read_only = " ◈"
 use_os_path_sep = true
-style = "italic #{{colors.on_background.default.hex_stripped}}"
+style = "italic text"
 format = '[$path]($style)[$read_only]($read_only_style)'
-repo_root_style = 'bold #{{colors.secondary.default.hex_stripped}}'
-repo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) [△](bold #{{colors.secondary.default.hex_stripped}})'
+repo_root_style = 'bold text'
+repo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) [△](bold muted)'
 
 [cmd_duration]
 min_time = 0
-format = "[◄ $duration ](italic #{{colors.on_surface_variant.default.hex_stripped}})"
+format = "[◄ $duration ](italic muted)"
 
 [jobs]
 format = "[$symbol$number]($style) "
-style = "#{{colors.on_surface_variant.default.hex_stripped}}"
-symbol = "[▶](#{{colors.secondary.default.hex_stripped}} italic)"
+style = "muted"
+symbol = "[▶](muted italic)"
 
 [time]
 disabled = false
 format = "[ $time]($style)"
 time_format = "%R"
 utc_time_offset = "local"
-style = "italic dimmed #{{colors.on_surface_variant.default.hex_stripped}}"
+style = "italic dimmed muted"
 
 [git_branch]
 format = " [$branch(:$remote_branch)]($style)"
-symbol = "[△](#{{colors.secondary.default.hex_stripped}})"
-style = "italic #{{colors.secondary.default.hex_stripped}}"
+symbol = "[△](muted)"
+style = "italic muted"
 truncation_symbol = "⋯"
 truncation_length = 11
 
 [git_status]
-style = "bold italic #{{colors.secondary.default.hex_stripped}}"
+style = "bold italic muted"
 format = "([⎪$ahead_behind$staged$modified$untracked$renamed$deleted$conflicted$stashed⎥]($style))"
-conflicted = "[◪◦](italic #{{colors.primary.default.hex_stripped}})"
-ahead = "[▴│[${count}](bold #{{colors.on_background.default.hex_stripped}})│](italic #{{colors.tertiary.default.hex_stripped}})"
-behind = "[▿│[${count}](bold #{{colors.on_background.default.hex_stripped}})│](italic #{{colors.error.default.hex_stripped}})"
-untracked = "[◌◦](italic #{{colors.on_primary_container.default.hex_stripped}})"
-modified = "[●◦](italic #{{colors.secondary_container.default.hex_stripped}})"
-staged = "[▪┤[$count](bold #{{colors.on_background.default.hex_stripped}})│](italic #{{colors.secondary.default.hex_stripped}})"
-deleted = "[✕](italic #{{colors.error.default.hex_stripped}})"
+conflicted = "[◪◦](italic warning)"
+ahead = "[▴│[${count}](bold text)│](italic warning)"
+behind = "[▿│[${count}](bold text)│](italic error)"
+untracked = "[◌◦](italic muted)"
+modified = "[●◦](italic ember)"
+staged = "[▪┤[$count](bold text)│](italic success)"
+deleted = "[✕](italic error)"
