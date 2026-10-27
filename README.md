@@ -1,6 +1,6 @@
 <div align="center">
   <h1>Wisp Dotfiles</h1>
-  <p>A cohesive, dynamically themed dotfiles collection for the Wisp Shell ecosystem.</p>
+  <p>Wisp Ember dotfiles for the Wisp Shell ecosystem: fixed dark neutrals, one light from your wallpaper.</p>
   <a href="#installation">Installation</a> •
   <a href="#customizing-your-install">Customization</a> •
   <a href="#dynamic-theming">Theming</a> •
@@ -105,13 +105,15 @@ Two files exist specifically for machine-local state that this repo never ships 
 Because `hypr/` is deployed as a **symlink** (`~/.config/hypr` → this repo's `hypr/`), both files simply live inside the repo directory on disk without ever being tracked by git — `git status` in `~/.config/wisp-dots` will always show them as clean/ignored, not as changes to commit.
 
 ## Dynamic Theming
-Wisp abandons hardcoded colors. Instead, it uses **Matugen** to extract a color palette directly from your wallpaper and dynamically generate configurations for your entire system — Kitty, Fastfetch, Btop, Starship, qtengine, qt5ct/qt6ct, and (if enabled) Spicetify/Vesktop.
+The dotfiles follow wisp-shell's **Wisp Ember** design: one light on a dark, quiet desktop. Backgrounds, greys and text are fixed (smoke `#0a0b0e`, ash `#15171c` / `#20232a`, text `#eef0f4`, muted `#8a8f9b`), and so are the semantic colours (red `#f38ba8`, green `#a6e3a1`, yellow `#f9e2af`). The only colour taken from your wallpaper is the **ember** — Matugen's `primary` — and it appears only where something is active: the glow around the focused window, the terminal cursor and selection, the prompt symbol, btop's graphs.
 
-To change the look of your desktop and all supported applications simultaneously:
+Fonts are **Mona Sans** for UI text and **Monaspace Neon** in the terminal.
+
+wisp-shell runs Matugen for you whenever the wallpaper changes. To do it by hand:
 ```bash
 matugen image /path/to/your/wallpaper.jpg
 ```
-This regenerates all templates in `matugen/config.toml` and instantly reapplies the new color scheme.
+This regenerates every template in `matugen/config.toml` (Hyprland, Kitty, Starship, Btop, Fastfetch, Qt, and if enabled Spicetify/Vesktop).
 
 ## Wisp Shell Integration
 This repo is designed to be used with [wisp-shell](https://github.com/cavalinho-xdd/wisp-shell)'s quickshell-based widgets, and its Hyprland config is written specifically against wisp-shell's Lua config layer (`hl.*`), **not** classic hyprlang `.conf`/`$variable` syntax. A few things to know if you're editing this config by hand:

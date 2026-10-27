@@ -16,6 +16,7 @@ packages = [
     "xdg-desktop-portal-hyprland",
     "xdg-desktop-portal-gtk",
     "ttf-jetbrains-mono-nerd",
+    "ttf-mona-sans",
 ]
 post_install = [
     "touch ${XDG_CONFIG_HOME:-$HOME/.config}/hypr/local.lua",
@@ -91,7 +92,7 @@ dest = "$XDG_CONFIG_HOME/fish"
 [[components]]
 name = "kitty"
 default = true
-packages = ["kitty", "ttf-jetbrains-mono-nerd"]
+packages = ["kitty", "otf-monaspace"]
 [[components.entries]]
 src = "kitty"
 dest = "$XDG_CONFIG_HOME/kitty"
