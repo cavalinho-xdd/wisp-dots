@@ -17,6 +17,30 @@ if status is-interactive
     # Starship custom prompt
     command -v starship &> /dev/null && starship init fish | source
 
+    # Wisp Ember syntax colours: white commands, grey arguments, semantic red/green/yellow
+    set -g fish_color_normal eef0f4
+    set -g fish_color_command eef0f4 --bold
+    set -g fish_color_keyword eef0f4 --bold
+    set -g fish_color_param b8bcc6
+    set -g fish_color_option 8a8f9b
+    set -g fish_color_quote a6e3a1
+    set -g fish_color_escape f9e2af
+    set -g fish_color_redirection 8a8f9b
+    set -g fish_color_operator 8a8f9b
+    set -g fish_color_end 8a8f9b
+    set -g fish_color_comment 5c616c --italics
+    set -g fish_color_error f38ba8
+    set -g fish_color_valid_path --underline
+    set -g fish_color_autosuggestion 5c616c
+    set -g fish_color_cancel f38ba8
+    set -g fish_color_selection --background=20232a
+    set -g fish_color_search_match --background=20232a
+    set -g fish_pager_color_prefix eef0f4 --bold
+    set -g fish_pager_color_completion b8bcc6
+    set -g fish_pager_color_description 5c616c
+    set -g fish_pager_color_progress 8a8f9b
+    set -g fish_pager_color_selected_background --background=20232a
+
     # Direnv + Zoxide
     command -v direnv &> /dev/null && direnv hook fish | source
     command -v zoxide &> /dev/null && zoxide init fish --cmd cd | source
