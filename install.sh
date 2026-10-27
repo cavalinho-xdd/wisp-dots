@@ -311,7 +311,8 @@ msg "Bootstrapping Matugen colors..."
 # template pointed at a not-yet-existing dir errors out rather than
 # mkdir -p'ing it) -- template output dirs that don't already exist from a
 # component deploy above need to be made ahead of time.
-mkdir -p "$HOME/.local/share/color-schemes" "$HOME/.config/fish" "$HOME/.config/hypr"
+mkdir -p "$HOME/.local/share/color-schemes" "$HOME/.config/fish" "$HOME/.config/hypr" \
+    "$HOME/.config/gtk-3.0" "$HOME/.config/gtk-4.0"
 # wisp-shell ships no bundled default wallpaper (there is no assets/ dir in
 # that repo) -- find whatever is actually the current wallpaper instead:
 # wisp's own settings.json first (source of truth once wisp has run at least
@@ -494,6 +495,8 @@ if command -v gsettings >/dev/null 2>&1; then
     gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark' || true
     gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Classic' || true
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark' || true
+    gsettings set org.gnome.desktop.interface font-name 'Mona Sans 11' || true
+    gsettings set org.gnome.desktop.interface monospace-font-name 'Monaspace Neon 11' || true
     msg_ok "GTK preferences configured."
 fi
 

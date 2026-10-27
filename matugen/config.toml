@@ -71,6 +71,14 @@ output_path = '~/.config/qt6ct/qss/matugen-style.qss'
 input_path = 'templates/qt-style.qss'
 output_path = '~/.config/qt5ct/qss/matugen-style.qss'
 
+[templates.gtk3]
+input_path = 'templates/gtk-colors.css'
+output_path = '~/.config/gtk-3.0/gtk.css'
+
+[templates.gtk4]
+input_path = 'templates/gtk-colors.css'
+output_path = '~/.config/gtk-4.0/gtk.css'
+
 [templates.hyprland_lua]
 input_path = 'templates/hyprland-colors.lua'
 output_path = '~/.config/hypr/colors.lua'
