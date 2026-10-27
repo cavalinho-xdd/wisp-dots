@@ -1,65 +1,51 @@
 {
     "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
-    "logo": null,
+    // Wisp Ember: quiet rows, muted keys, white values; the ember lights only the wisp and the meters.
+    "logo": {
+        "type": "file",
+        "source": "~/.config/fastfetch/logo.txt",
+        "color": {
+            "1": "#8fd3ff",
+            "2": "#5c616c"
+        },
+        "padding": { "left": 2, "right": 4, "top": 1 }
+    },
     "display": {
         "separator": "  ",
-        "constants": [
-            "\u001b[38;2;205;214;244m",
-            "\u001b[38;2;203;166;247m"
-        ]
+        "key": { "width": 9 },
+        "color": {
+            "keys": "#8a8f9b",
+            "title": "#eef0f4",
+            "output": "#eef0f4"
+        },
+        "duration": { "abbreviation": true, "spaceBeforeUnit": "never" },
+        "percent": { "type": 3, "width": 4 },
+        "brightColor": false,
+        "bar": {
+            "width": 12,
+            "char": { "elapsed": "━", "total": "━" },
+            "border": { "left": "", "right": "" },
+            "color": { "elapsed": "#8fd3ff", "total": "#20232a" }
+        }
     },
     "modules": [
         "break",
-        {
-            "type": "custom",
-            "key": "╭──────────────────────────────╮",
-            "format": ""
-        },
-        {
-            "type": "os",
-            "key": "│ {$1}󰍹 OS  ",
-            "format": "{$2}{name>20}{$1} │"
-        },
-        {
-            "type": "kernel",
-            "key": "│ {$1}󰌢 Ker ",
-            "format": "{$2}{release>20}{$1} │"
-        },
-        {
-            "type": "packages",
-            "key": "│ {$1}󰏖 Pkg ",
-            "format": "{$2}{all>20}{$1} │"
-        },
-        {
-            "type": "wm",
-            "key": "│ {$1}󰨇 WM  ",
-            "format": "{$2}{2<12}{5<8}{$1} │"
-        },
-        {
-            "type": "shell",
-            "key": "│ {$1}󰆍 Sh  ",
-            "format": "{$2}{3<12}{4<8}{$1} │"
-        },
-        {
-            "type": "terminal",
-            "key": "│ {$1}󰆍 Term",
-            "format": "{$2}{3<20}{$1} │"
-        },
-        {
-            "type": "uptime",
-            "key": "│ {$1}󰅐 Up  ",
-            "format": "{$2}{2>15}h {4}m{$1} │"
-        },
-        {
-            "type": "memory",
-            "key": "│ {$1}󰍛 Mem ",
-            "format": "{$2}{1<9} /{2<9}{$1} │"
-        },
-        {
-            "type": "custom",
-            "key": "╰──────────────────────────────╯",
-            "format": ""
-        },
+        { "type": "title", "format": "{#1}{user-name}{#}{#38;2;92;97;108}@{#}{#1}{host-name}{#}" },
+        "break",
+        { "type": "os", "key": "os", "format": "{pretty-name}" },
+        { "type": "kernel", "key": "kernel", "format": "{release}" },
+        { "type": "packages", "key": "pkgs", "format": "{all}" },
+        "break",
+        { "type": "wm", "key": "wm", "format": "{pretty-name} {version}" },
+        { "type": "shell", "key": "shell", "format": "{pretty-name} {version}" },
+        { "type": "terminal", "key": "term", "format": "{pretty-name} {version}" },
+        { "type": "cpu", "key": "cpu", "format": "{name}" },
+        { "type": "gpu", "key": "gpu", "format": "{name}" },
+        "break",
+        { "type": "uptime", "key": "uptime" },
+        { "type": "memory", "key": "memory", "format": "{percentage-bar} {percentage}  {used} / {total}" },
+        { "type": "disk", "key": "disk", "folders": "/", "format": "{size-percentage-bar} {size-percentage}  {size-used} / {size-total}" },
+        { "type": "battery", "key": "battery", "format": "{capacity-bar} {capacity}  {status}" },
         "break"
     ]
 }
