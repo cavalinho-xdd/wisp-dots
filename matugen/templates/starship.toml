@@ -4,14 +4,6 @@
 add_newline = false
 palette = "wisp"
 
-# Wisp Ember: fixed neutrals and semantic colours, only the ember comes from the wallpaper
-[palettes.wisp]
-ember = "#{{colors.primary.default.hex_stripped}}"
-text = "#eef0f4"
-muted = "#8a8f9b"
-error = "#f38ba8"
-success = "#a6e3a1"
-warning = "#f9e2af"
 continuation_prompt = "[▸▹ ](muted)"
 
 format = """($nix_shell$container$fill$git_metrics\n)$cmd_duration\
@@ -37,6 +29,15 @@ $status\
 $os\
 $battery\
 $time"""
+
+# Wisp Ember: fixed neutrals and semantic colours, only the ember comes from the wallpaper
+[palettes.wisp]
+ember = "#{{colors.primary.default.hex_stripped}}"
+text = "#eef0f4"
+muted = "#8a8f9b"
+error = "#f38ba8"
+success = "#a6e3a1"
+warning = "#f9e2af"
 
 [fill]
 symbol = ' '
