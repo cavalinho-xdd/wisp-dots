@@ -2,7 +2,7 @@
    GLOBAL & BASICS 
 ========================================================= */
 QWidget {
-    font-family: "JetBrainsMono Nerd Font";
+    font-family: "Mona Sans";
     font-size: 11pt;
     color: #eef0f4;
     /* REMOVED: background-color: transparent; (Fixes Qt5 transparent rendering bugs) */
