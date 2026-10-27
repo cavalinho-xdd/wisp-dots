@@ -21,7 +21,3 @@ hl.window_rule({ match = { class = "^(wisp-scratchpad)$" }, float = true })
 hl.window_rule({ match = { class = "^(wisp-scratchpad)$" }, size = "800 500" })
 hl.window_rule({ match = { class = "^(wisp-scratchpad)$" }, move = "50% 80px" })
 hl.window_rule({ match = { class = "^(wisp-scratchpad)$" }, workspace = "special:scratchpad" })
-
--- Frost behind wisp-shell's islands so the tinted/smoked materials read as glass.
--- ignore_alpha keeps the faint ember glow (<= ~26% alpha) out of the blur mask.
-hl.layer_rule({ match = { namespace = "^wisp-ember$" }, blur = true, ignore_alpha = 0.5 })
