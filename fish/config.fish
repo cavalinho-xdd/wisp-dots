@@ -40,6 +40,11 @@ if status is-interactive
     set -g fish_pager_color_description 5c616c
     set -g fish_pager_color_progress 8a8f9b
     set -g fish_pager_color_selected_background --background=20232a
+    # The ember from the wallpaper (matugen writes this on every wallpaper change)
+    if test -f $HOME/.config/fish/matugen_colors.fish
+        source $HOME/.config/fish/matugen_colors.fish
+        set -g fish_pager_color_prefix $matugen_primary --bold
+    end
 
     # Direnv + Zoxide
     command -v direnv &> /dev/null && direnv hook fish | source

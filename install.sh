@@ -324,6 +324,14 @@ if [ -z "$WP_PATH" ] || [ ! -f "$WP_PATH" ]; then
     WP_PATH="$(find "$WALL_DIR" -maxdepth 1 -iregex '.*\.\(jpg\|jpeg\|png\)' 2>/dev/null | head -1)"
 fi
 
+# First-start wallpaper: awww has nothing to restore on a fresh install, so
+# hyprland.lua shows this link instead -- the shell's first-start colour run
+# then reads it back from awww and the ember matches from the first login.
+if [ -n "$WP_PATH" ] && [ -f "$WP_PATH" ]; then
+    mkdir -p "$XDG_CONFIG_HOME/wisp-dots"
+    ln -sf "$WP_PATH" "$XDG_CONFIG_HOME/wisp-dots/wallpaper"
+fi
+
 if command -v matugen >/dev/null 2>&1; then
     if [ -n "$WP_PATH" ] && [ -f "$WP_PATH" ]; then
         if matugen image "$WP_PATH" --source-color-index 0 -q >/dev/null 2>&1; then

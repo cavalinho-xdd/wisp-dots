@@ -35,7 +35,9 @@ hl.on("hyprland.start", function()
     -- awww doesn't auto-restore on launch like hyprpaper's config file does;
     -- it caches the last-set image and needs an explicit restore call once
     -- the daemon is up.
-    hl.exec_cmd("sleep 1 && awww restore")
+    -- Fresh install: empty cache, so show install.sh's first-start wallpaper.
+    hl.exec_cmd("sleep 1 && if find \"$HOME/.cache/awww\" -type f 2>/dev/null | grep -q .; then awww restore; " ..
+        "elif [ -e \"$HOME/.config/wisp-dots/wallpaper\" ]; then awww img \"$HOME/.config/wisp-dots/wallpaper\"; fi")
     -- Clipboard history: cliphist only stores what this watcher feeds it.
     hl.exec_cmd("wl-paste --watch cliphist store")
     -- Contextual Scratchpad
