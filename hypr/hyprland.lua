@@ -3,7 +3,8 @@
 -- Structured for wisp-shell compatibility.
 
 require("env")
-require("monitors")
+require("monitors_default")
+pcall(require, "monitors") -- nwg-displays output, per machine
 require("general")
 require("animations")
 require("windowrules")

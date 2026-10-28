@@ -17,6 +17,9 @@ packages = [
     "xdg-desktop-portal-gtk",
     "ttf-jetbrains-mono-nerd",
     "ttf-mona-sans",
+    "noto-fonts-emoji", # emoji in Zen, Vesktop, kitty -- boxes without it
+    "noto-fonts-cjk",
+    "nwg-displays",     # monitor layout GUI; writes hypr/monitors.lua
 ]
 post_install = [
     "touch ${XDG_CONFIG_HOME:-$HOME/.config}/hypr/local.lua",
@@ -40,6 +43,12 @@ default = true
 # Pipewire.defaultAudioSink/Source -- both need a real running PipeWire +
 # WirePlumber session, not just Quickshell's libpipewire client link.
 packages = ["pipewire", "pipewire-pulse", "pipewire-audio", "pipewire-alsa", "wireplumber", "pwvucontrol"]
+
+[[components]]
+name = "apps"
+default = true
+# Everyday desktop apps, Qt/KDE so they share the qtengine theme.
+packages = ["kate", "gwenview", "okular", "ark", "unzip", "7zip", "mpv", "kcalc"]
 
 [[components]]
 name = "filemanager"

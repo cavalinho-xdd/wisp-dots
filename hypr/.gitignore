@@ -1,3 +1,5 @@
 colors.lua
 test_path.lua
 material.lua
+# nwg-displays writes the real monitor layout here; monitors_default.lua is the shipped fallback
+monitors.lua
