@@ -61,7 +61,7 @@ packages = ["adw-gtk-theme", "papirus-icon-theme", "bibata-cursor-theme-bin"]
 [[components]]
 name = "matugen"
 default = true
-packages = ["matugen-bin"]
+packages = ["matugen"]  # in extra; an installed matugen-bin also satisfies it
 [[components.entries]]
 src = "matugen"
 dest = "$XDG_CONFIG_HOME/matugen"

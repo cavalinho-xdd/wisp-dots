@@ -168,8 +168,10 @@ if [ ! -d "$WISP_SHELL_DIR" ]; then
     fi
     bash "$WISP_SHELL_DIR/setup" install
     msg_ok "Wisp Shell installed."
-elif ! command -v wisp >/dev/null 2>&1; then
-    msg_warn "Wisp Shell directory exists but 'wisp' isn't on PATH. Re-running its setup..."
+# Check the file, not PATH: under wisp-shell's `setup bootstrap` this script
+# runs before ~/.local/bin is on PATH, which would re-run setup for nothing.
+elif [ ! -x "$HOME/.local/bin/wisp" ]; then
+    msg_warn "Wisp Shell directory exists but ~/.local/bin/wisp is missing. Re-running its setup..."
     bash "$WISP_SHELL_DIR/setup" install
     msg_ok "Wisp Shell setup re-run."
 else
