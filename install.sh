@@ -104,30 +104,40 @@ fi
 
 mapfile -t ENABLED_COMPONENTS < <(python3 "$MANIFEST_PY" enabled "${MANIFEST_ARGS[@]}")
 
-# 1. Detect / bootstrap AUR Helper
+# 1. AUR helper -- only for packages not in the official repos, and only if
+# it actually runs: paru-bin/yay-bin are prebuilt against one libalpm soname
+# and break on every pacman soname bump ("libalpm.so.15: cannot open shared
+# object file"), which used to sink the whole install. Without a working
+# helper, AUR packages are built directly with makepkg.
 AUR_HELPER=""
-if command -v paru >/dev/null 2>&1; then
-    AUR_HELPER="paru"
-elif command -v yay >/dev/null 2>&1; then
-    AUR_HELPER="yay"
-elif command -v pacman >/dev/null 2>&1; then
-    msg_warn "No AUR helper (paru/yay) found. Building paru from AUR..."
-    sudo pacman -S --needed --noconfirm base-devel git
-    BUILD_DIR="$(mktemp -d)"
-    if git clone --depth 1 https://aur.archlinux.org/paru-bin.git "$BUILD_DIR" >/dev/null 2>&1 \
-        && (cd "$BUILD_DIR" && makepkg -si --noconfirm); then
-        AUR_HELPER="paru"
-        msg_ok "paru installed."
-    else
-        msg_warn "Failed to build paru automatically. Package installation will be skipped."
+for h in paru yay; do
+    command -v "$h" >/dev/null 2>&1 || continue
+    if "$h" --version >/dev/null 2>&1; then
+        AUR_HELPER="$h"
+        break
     fi
-    rm -rf "$BUILD_DIR"
-else
-    msg_warn "Not on Arch (no pacman). Skipping package installation."
-fi
+    msg_warn "$h is installed but doesn't run (rebuild it) -- not using it."
+done
+
+install_aur() {
+    local pkg="$1" dir
+    if [ -n "$AUR_HELPER" ]; then
+        "$AUR_HELPER" -S --needed --noconfirm "$pkg"
+        return
+    fi
+    sudo pacman -S --needed --noconfirm base-devel git >/dev/null || return 1
+    dir="$(mktemp -d)"
+    git clone --depth 1 "https://aur.archlinux.org/$pkg.git" "$dir" >/dev/null 2>&1 \
+        && (cd "$dir" && makepkg -si --noconfirm --needed)
+    local rc=$?
+    rm -rf "$dir"
+    return $rc
+}
 
 # 2. Dependency detection + install (packages come from manifest.toml, not a
-# second hardcoded list -- that duplication is what caused it to drift last time)
+# second hardcoded list -- that duplication is what caused it to drift last time).
+# Official packages go in one pacman transaction; AUR ones one at a time, so a
+# single failing build can't take every other package down with it.
 mapfile -t DESIRED < <(python3 "$MANIFEST_PY" packages "${MANIFEST_ARGS[@]}")
 INSTALLED_PACKAGES=()
 if [ ${#DESIRED[@]} -gt 0 ]; then
@@ -139,16 +149,29 @@ if [ ${#DESIRED[@]} -gt 0 ]; then
 
     if [ ${#MISSING[@]} -eq 0 ]; then
         msg_ok "All manifest packages already installed."
-    elif [ -n "$AUR_HELPER" ]; then
-        msg "Missing: ${MISSING[*]}"
-        msg "Installing via $AUR_HELPER..."
-        $AUR_HELPER -S --needed --noconfirm "${MISSING[@]}" || msg_warn "Some packages failed to install."
-        msg_ok "Packages installed."
+    elif ! command -v pacman >/dev/null 2>&1; then
+        msg_warn "Not on Arch (no pacman). Install these yourself: ${MISSING[*]}"
     else
-        msg_warn "Missing packages (no AUR helper to install them): ${MISSING[*]}"
+        REPO_PKGS=(); AUR_PKGS=()
+        for p in "${MISSING[@]}"; do
+            if pacman -Si "$p" >/dev/null 2>&1; then REPO_PKGS+=("$p"); else AUR_PKGS+=("$p"); fi
+        done
+        if [ ${#REPO_PKGS[@]} -gt 0 ]; then
+            msg "Installing from the official repos: ${REPO_PKGS[*]}"
+            sudo pacman -S --needed --noconfirm "${REPO_PKGS[@]}" \
+                || msg_warn "pacman failed to install some of: ${REPO_PKGS[*]}"
+        fi
+        for p in "${AUR_PKGS[@]}"; do
+            msg "Installing from the AUR: $p"
+            install_aur "$p" || msg_warn "AUR package failed: $p"
+        done
     fi
     for p in "${DESIRED[@]}"; do
-        pacman -Qi "$p" >/dev/null 2>&1 && INSTALLED_PACKAGES+=("$p")
+        if pacman -Qi "$p" >/dev/null 2>&1; then
+            INSTALLED_PACKAGES+=("$p")
+        else
+            msg_warn "Still missing: $p"
+        fi
     done
 fi
 
