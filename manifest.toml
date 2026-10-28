@@ -51,11 +51,21 @@ default = true
 packages = ["kate", "gwenview", "okular", "ark", "unzip", "7zip", "mpv", "kcalc"]
 
 [[components]]
+name = "power"
+default = true
+# Power saver / balanced / performance profiles (powerprofilesctl, D-Bus).
+# Enabled explicitly: Arch ships no preset for it. start fails harmlessly in a chroot.
+packages = ["power-profiles-daemon"]
+post_install = [
+    "sudo systemctl enable power-profiles-daemon.service && { sudo systemctl start power-profiles-daemon.service 2>/dev/null || true; }",
+]
+
+[[components]]
 name = "filemanager"
 default = true
 # hypr/keybinds.lua binds SUPER+E to dolphin (also the README's documented
 # out-of-box file manager keybind). qt-theme themes it but never installed it.
-packages = ["dolphin"]
+packages = ["dolphin", "kio-extras", "ffmpegthumbs", "kdegraphics-thumbnailers"]  # + image/video/PDF previews
 
 [[components]]
 name = "gtk-theme"
