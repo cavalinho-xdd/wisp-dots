@@ -6,7 +6,8 @@
         "source": "~/.config/fastfetch/logo.txt",
         "color": {
             "1": "#{{colors.primary.default.hex_stripped}}",
-            "2": "#5c616c"
+            "2": "#5c616c",
+            "3": "#eef0f4"
         },
         "padding": { "left": 2, "right": 4, "top": 1 }
     },
