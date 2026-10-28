@@ -274,6 +274,11 @@ if is_enabled discord; then
     TMP_DISCORD="$(mktemp -d)"
     if git clone --depth 1 https://github.com/refact0r/midnight-discord.git "$TMP_DISCORD" >/dev/null 2>&1; then
         cat "$TMP_DISCORD/themes/midnight.theme.css" > "$DOTS_DIR/matugen/templates/discord.css"
+        # Rename to wisp-shell, keeping the credit to midnight's author
+        sed -i -e 's/^ \* @name midnight$/ * @name wisp-shell/' \
+            -e 's/^ \* @description .*/ * @description Wisp Ember for Discord. Based on midnight by refact0r./' \
+            -e 's/^ \* @author refact0r$/ * @author refact0r (midnight), Wisp/' \
+            "$DOTS_DIR/matugen/templates/discord.css"
         cat << 'EOF' >> "$DOTS_DIR/matugen/templates/discord.css"
 
 /* Matugen overrides: Wisp Ember (fixed neutrals, ember from the wallpaper) */
@@ -301,8 +306,40 @@ if is_enabled discord; then
   --background-secondary-alt: var(--bg-2);
   --background-tertiary: var(--bg-1);
 }
+
+/* Wisp: the "wi" mark replaces midnight's moon. Two masks because a mask is one colour:
+   ::before is the w (island-text), ::after the ember dot; hover/selected inverts to smoke on island-text. */
+body {
+  --dms-icon-svg-url: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='20 3 68 78'><g transform='rotate(-8 50 55)'><path d='M27 44 L39 74 L54 50 L69 74 L86.5 30' fill='none' stroke='black' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/></g></svg>");
+  --wisp-dot-svg-url: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='20 3 68 78'><g transform='rotate(-8 50 55)'><circle cx='86.5' cy='15' r='7'/></g></svg>");
+  --dms-icon-svg-size: 90%;
+  --dms-icon-color-before: #eef0f4;
+  --dms-icon-color-after: #0a0b0e;
+}
+.wrapper__6e9f8[data-list-item-id='guildsnav___home'] > .childWrapper__6e9f8::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 65%;
+  height: 65%;
+  background: #{{colors.primary.default.hex_stripped}};
+  mask-image: var(--wisp-dot-svg-url);
+  mask-size: var(--dms-icon-svg-size);
+  mask-position: center;
+  mask-repeat: no-repeat;
+  transition: background-color 0.15s ease-out, transform var(--dms-icon-svg-transition);
+}
+.wrapper__6e9f8[data-list-item-id='guildsnav___home']:hover > .childWrapper__6e9f8,
+.wrapper__6e9f8[data-list-item-id='guildsnav___home'].selected__6e9f8 > .childWrapper__6e9f8 {
+  background-color: #eef0f4 !important;
+}
+.wrapper__6e9f8[data-list-item-id='guildsnav___home']:hover > .childWrapper__6e9f8::after,
+.wrapper__6e9f8[data-list-item-id='guildsnav___home'].selected__6e9f8 > .childWrapper__6e9f8::after {
+  background: #0a0b0e;
+  transform: rotate(-360deg) scale(0.8);
+}
 EOF
-        msg_ok "Midnight theme downloaded & Matugen template updated."
+        msg_ok "Wisp-shell theme (midnight base) downloaded & Matugen template updated."
     else
         msg_warn "Failed to clone midnight-discord."
     fi
