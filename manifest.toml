@@ -76,7 +76,9 @@ default = true
 # matugen component above; their .conf files aren't shipped as static
 # dotfiles since they need a real absolute $HOME baked in -- install.sh's
 # "Qt platform theme" step generates them.
-packages = ["qtengine", "breeze", "qt5ct", "qt6ct", "kvantum"]
+# breeze5/kvantum-qt5/qt5-wayland: the Qt5 halves, so Qt5 apps get the same
+# style and run natively on Wayland like Qt6 ones (qt6-wayland).
+packages = ["qtengine", "breeze", "breeze5", "qt5ct", "qt6ct", "kvantum", "kvantum-qt5", "qt5-wayland", "qt6-wayland"]
 [[components.entries]]
 src = "qtengine"
 dest = "$XDG_CONFIG_HOME/qtengine"
@@ -164,7 +166,22 @@ dest = "$XDG_CONFIG_HOME/spicetify"
 
 [[components]]
 name = "discord"
+default = true
 packages = ["vesktop-bin"]
+# matugen renders the wisp-shell theme to vesktop/themes/matugen.css; switch it
+# on in Vesktop's own settings so it's active on the first launch.
+post_install = [
+    "f=${XDG_CONFIG_HOME:-$HOME/.config}/vesktop/settings/settings.json; mkdir -p \"${f%/*}\"; [ -s \"$f\" ] || echo '{}' > \"$f\"; jq '.enabledThemes = ((.enabledThemes // []) - [\"matugen.css\"] + [\"matugen.css\"])' \"$f\" > \"$f.tmp\" && mv \"$f.tmp\" \"$f\"",
+]
+
+[[components]]
+name = "browser"
+default = true
+# Zen is the one browser; firefox stays an optional component for its userChrome.
+packages = ["zen-browser-bin"]
+post_install = [
+    "xdg-mime default zen.desktop x-scheme-handler/http x-scheme-handler/https text/html application/xhtml+xml",
+]
 
 [[components]]
 name = "firefox"

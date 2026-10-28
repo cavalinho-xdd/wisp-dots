@@ -91,7 +91,8 @@ Re-running `install.sh` later is safe — it's idempotent (existing symlinks/pac
 | `clipboard` | yes | `wl-clipboard`, `cliphist` |
 | `tools` | yes | curl, git, jq, rsync, lazygit, bat, ripgrep, xdg-user-dirs, brightnessctl |
 | `spotify` | no | Spicetify + Matugen theme + marketplace |
-| `discord` | no | Vesktop |
+| `discord` | yes | Vesktop + the wisp-shell theme |
+| `browser` | yes | Zen Browser (default browser) |
 | `firefox` | no | `userChrome.css`, profile auto-detected via `profiles.ini` |
 
 Run `python3 scripts/manifest.py components` to print this list straight from `manifest.toml` (source of truth).
