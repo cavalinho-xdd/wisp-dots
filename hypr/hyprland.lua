@@ -36,6 +36,8 @@ hl.on("hyprland.start", function()
     -- it caches the last-set image and needs an explicit restore call once
     -- the daemon is up.
     hl.exec_cmd("sleep 1 && awww restore")
+    -- Clipboard history: cliphist only stores what this watcher feeds it.
+    hl.exec_cmd("wl-paste --watch cliphist store")
     -- Contextual Scratchpad
     hl.exec_cmd("[workspace special:scratchpad silent] kitty --class wisp-scratchpad micro ~/scratchpad.txt")
 end)

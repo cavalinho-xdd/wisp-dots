@@ -162,7 +162,10 @@ WISP_SHELL_DIR="$HOME/.local/share/wisp-shell"
 if [ ! -d "$WISP_SHELL_DIR" ]; then
     msg_warn "Wisp Shell not found. Cloning to $WISP_SHELL_DIR..."
     mkdir -p "$(dirname "$WISP_SHELL_DIR")"
-    git clone https://github.com/cavalinho-xdd/wisp-shell.git "$WISP_SHELL_DIR" >/dev/null 2>&1
+    if ! git clone https://github.com/cavalinho-xdd/wisp-shell.git "$WISP_SHELL_DIR"; then
+        msg_err "Could not clone wisp-shell (network? git?). Fix that and re-run install.sh."
+        exit 1
+    fi
     bash "$WISP_SHELL_DIR/setup" install
     msg_ok "Wisp Shell installed."
 elif ! command -v wisp >/dev/null 2>&1; then
@@ -266,91 +269,14 @@ if command -v spicetify >/dev/null 2>&1; then
     msg_ok "Spicetify configured."
 fi
 
-# 4.5 Discord / Vesktop Midnight Theme via Git
-if is_enabled discord; then
-    msg "Deploying Discord/Vesktop Midnight Theme via Git..."
-    mkdir -p "$HOME/.config/vesktop/themes" "$HOME/.config/Vencord/themes"
-    
-    TMP_DISCORD="$(mktemp -d)"
-    if git clone --depth 1 https://github.com/refact0r/midnight-discord.git "$TMP_DISCORD" >/dev/null 2>&1; then
-        cat "$TMP_DISCORD/themes/midnight.theme.css" > "$DOTS_DIR/matugen/templates/discord.css"
-        # Rename to wisp-shell, keeping the credit to midnight's author
-        sed -i -e 's/^ \* @name midnight$/ * @name wisp-shell/' \
-            -e 's/^ \* @description .*/ * @description Wisp Ember for Discord. Based on midnight by refact0r./' \
-            -e 's/^ \* @author refact0r$/ * @author refact0r (midnight), Wisp/' \
-            "$DOTS_DIR/matugen/templates/discord.css"
-        cat << 'EOF' >> "$DOTS_DIR/matugen/templates/discord.css"
+# 4.5 Discord / Vesktop: matugen/templates/discord.css is the wisp-shell theme
+# (midnight by refact0r + Wisp overrides), already in this repo -- step 5
+# renders it into vesktop/ and Vencord/themes. Enable it once in Vesktop's
+# Settings > Themes.
 
-/* Matugen overrides: Wisp Ember (fixed neutrals, ember from the wallpaper) */
-:root, body {
-  --font: 'Mona Sans';
-  --code-font: 'Monaspace Neon';
-  --border-thickness: 0px;
-  --text-1: #eef0f4;
-  --text-2: #d4d7de;
-  --text-3: #b8bcc6;
-  --text-4: #8a8f9b;
-  --text-5: #5c616c;
-  --bg-1: #2a2d35;
-  --bg-2: #20232a;
-  --bg-3: #15171c;
-  --bg-4: #0a0b0e;
-  --accent-1: #{{colors.primary.default.hex_stripped}};
-  --accent-2: #{{colors.primary.default.hex_stripped}};
-  --accent-3: #{{colors.primary_container.default.hex_stripped}};
-  --accent-4: #{{colors.primary_container.default.hex_stripped}};
-  --accent-5: #{{colors.primary_container.default.hex_stripped}};
-  --accent-new: #f38ba8;
-  --background-primary: var(--bg-4);
-  --background-secondary: var(--bg-3);
-  --background-secondary-alt: var(--bg-2);
-  --background-tertiary: var(--bg-1);
-}
-
-/* Wisp: the "wi" mark replaces midnight's moon. Two masks because a mask is one colour:
-   ::before is the w (island-text), ::after the ember dot; hover/selected inverts to smoke on island-text. */
-body {
-  --dms-icon-svg-url: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='20 3 68 78'><g transform='rotate(-8 50 55)'><path d='M27 44 L39 74 L54 50 L69 74 L86.5 30' fill='none' stroke='black' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/></g></svg>");
-  --wisp-dot-svg-url: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='20 3 68 78'><g transform='rotate(-8 50 55)'><circle cx='86.5' cy='15' r='7'/></g></svg>");
-  --dms-icon-svg-size: 90%;
-  --dms-icon-color-before: #eef0f4;
-  --dms-icon-color-after: #0a0b0e;
-}
-.wrapper__6e9f8[data-list-item-id='guildsnav___home'] > .childWrapper__6e9f8::after {
-  content: '';
-  display: block;
-  position: absolute;
-  width: 65%;
-  height: 65%;
-  background: #{{colors.primary.default.hex_stripped}};
-  mask-image: var(--wisp-dot-svg-url);
-  mask-size: var(--dms-icon-svg-size);
-  mask-position: center;
-  mask-repeat: no-repeat;
-  transition: background-color 0.15s ease-out, transform var(--dms-icon-svg-transition);
-}
-.wrapper__6e9f8[data-list-item-id='guildsnav___home']:hover > .childWrapper__6e9f8,
-.wrapper__6e9f8[data-list-item-id='guildsnav___home'].selected__6e9f8 > .childWrapper__6e9f8 {
-  background-color: #eef0f4 !important;
-}
-.wrapper__6e9f8[data-list-item-id='guildsnav___home']:hover > .childWrapper__6e9f8::after,
-.wrapper__6e9f8[data-list-item-id='guildsnav___home'].selected__6e9f8 > .childWrapper__6e9f8::after {
-  background: #0a0b0e;
-  transform: rotate(-360deg) scale(0.8);
-}
-EOF
-        msg_ok "Wisp-shell theme (midnight base) downloaded & Matugen template updated."
-    else
-        msg_warn "Failed to clone midnight-discord."
-    fi
-    rm -rf "$TMP_DISCORD"
-fi
 # 5. Bootstrapping dynamic themes via Matugen
 msg "Bootstrapping Matugen colors..."
-# matugen does not create nested output directories itself (verified: a
-# template pointed at a not-yet-existing dir errors out rather than
-# mkdir -p'ing it) -- template output dirs that don't already exist from a
-# component deploy above need to be made ahead of time.
+# Current matugen creates missing output dirs itself; kept for older versions.
 mkdir -p "$HOME/.local/share/color-schemes" "$HOME/.config/fish" "$HOME/.config/hypr" \
     "$HOME/.config/gtk-3.0" "$HOME/.config/gtk-4.0"
 # wisp-shell ships no bundled default wallpaper (there is no assets/ dir in
@@ -375,8 +301,11 @@ fi
 
 if command -v matugen >/dev/null 2>&1; then
     if [ -n "$WP_PATH" ] && [ -f "$WP_PATH" ]; then
-        matugen image "$WP_PATH" --source-color-index 0 -q >/dev/null 2>&1 || true
-        msg_ok "Matugen theme applied from $WP_PATH."
+        if matugen image "$WP_PATH" --source-color-index 0 -q >/dev/null 2>&1; then
+            msg_ok "Matugen theme applied from $WP_PATH."
+        else
+            msg_warn "Matugen failed on $WP_PATH -- run 'matugen image <path>' manually to see why."
+        fi
     else
         msg_warn "No wallpaper found. Run 'matugen image <path>' later."
     fi

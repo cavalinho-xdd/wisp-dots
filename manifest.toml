@@ -130,6 +130,7 @@ dest = "$XDG_CONFIG_HOME/micro"
 [[components]]
 name = "clipboard"
 default = true
+# hypr/hyprland.lua starts `wl-paste --watch cliphist store` on hyprland.start
 packages = ["wl-clipboard", "cliphist"]
 
 [[components]]
@@ -139,10 +140,10 @@ packages = [
     "curl",
     "git",
     "jq",
+    "rsync", # install.sh deploy_copy syncs every non-hypr config with it
     "lazygit",
     "bat",
     "ripgrep",
-    "ydotool",
     "xdg-user-dirs",
     "brightnessctl", # hypr/keybinds.lua hardware brightness keys
 ]

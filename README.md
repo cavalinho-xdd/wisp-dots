@@ -89,7 +89,7 @@ Re-running `install.sh` later is safe — it's idempotent (existing symlinks/pac
 | `btop` | yes | |
 | `micro` | yes | |
 | `clipboard` | yes | `wl-clipboard`, `cliphist` |
-| `tools` | yes | curl, git, jq, lazygit, bat, ripgrep, ydotool, xdg-user-dirs |
+| `tools` | yes | curl, git, jq, rsync, lazygit, bat, ripgrep, xdg-user-dirs, brightnessctl |
 | `spotify` | no | Spicetify + Matugen theme + marketplace |
 | `discord` | no | Vesktop |
 | `firefox` | no | `userChrome.css`, profile auto-detected via `profiles.ini` |
